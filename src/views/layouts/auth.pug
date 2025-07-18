@@ -1,0 +1,29 @@
+doctype html
+html(lang='pt-BR')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title= title ? `${title} - Football Championship Platform` : 'Football Championship Platform'
+        link(rel='stylesheet', href='/css/style.css')
+
+    body.auth-body
+        .auth-container
+            .auth-header
+                h1 Football Championship Platform
+
+            .auth-content
+                if errors && errors.length > 0
+                    .alert.alert-error
+                        each error in errors
+                            p= error
+
+                if success
+                    .alert.alert-success
+                        p= success
+
+                block content
+
+            .auth-footer
+                p © 2024 Football Championship Platform
+
+        script(src='/js/main.js')

@@ -1,0 +1,22 @@
+extends ../layouts/auth
+
+block content
+    .auth-form
+        h2 Entrar
+
+        form(action='/auth/login', method='post')
+            .form-group
+                label(for='email') Email:
+                input(type='email', id='email', name='email', required)
+
+            .form-group
+                label(for='password') Senha:
+                input(type='password', id='password', name='password', required)
+
+            .form-group
+                button(type='submit') Entrar
+
+        .auth-links
+            p
+                | Não tem uma conta?
+                a(href='/auth/register') Registre-se

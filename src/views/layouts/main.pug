@@ -1,0 +1,42 @@
+doctype html
+html(lang='pt-BR')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        title= title ? `${title} - Football Championship Platform` : 'Football Championship Platform'
+        link(rel='stylesheet', href='/css/style.css')
+
+    body
+        nav.navbar
+            .navbar-brand
+                a(href='/') Football Championship Platform
+
+            .navbar-nav
+                if user
+                    a(href='/dashboard') Dashboard
+                    a(href='/teams') Equipes
+                    a(href='/championships') Campeonatos
+                    .navbar-user
+                        span Olá, #{user.name}!
+                        form.logout-form(action='/auth/logout', method='post')
+                            button(type='submit') Sair
+                else
+                    a(href='/auth/login') Login
+                    a(href='/auth/register') Registrar
+
+        main.main-content
+            if errors && errors.length > 0
+                .alert.alert-error
+                    each error in errors
+                        p= error
+
+            if success
+                .alert.alert-success
+                    p= success
+
+            block content
+
+        footer.footer
+            p © 2024 Football Championship Platform
+
+        script(src='/js/main.js')
