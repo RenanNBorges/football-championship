@@ -1,0 +1,54 @@
+extends layouts/main
+
+block content
+    if success
+        .alert.alert--success= success
+    if errors && errors.length > 0
+        .alert.alert--error
+            ul
+                each error in errors
+                    li= error
+
+    .page-header
+        h1.page-header__title Dashboard
+
+    if !teams.length && !championships.length
+        .card
+            .card__body
+                p Você ainda não criou nenhuma equipe ou campeonato. Comece agora mesmo!
+                .form-actions
+                    a.btn.btn--primary(href="/teams/create") Criar Nova Equipe
+                    a.btn.btn--secondary(href="/championships/create") Criar Novo Campeonato
+    else
+        .data-grid
+            .card
+                .card__header
+                    h3 Suas Equipes Recentes
+                .card__body
+                    if teams.length
+                        ul.details-list
+                            each team in teams
+                                li
+                                    a(href=`/teams/${team.id}`) #{team.name} -
+                                    span #{team.country}
+                        a(href="/teams") Ver todas as equipes
+                    else
+                        p Nenhuma equipe criada ainda.
+                .card__footer
+                    a.btn.btn--primary(href="/teams/create") + Nova Equipe
+
+            .card
+                .card__header
+                    h3 Seus Campeonatos Recentes
+                .card__body
+                    if championships.length
+                        ul.details-list
+                            each champ in championships
+                                li
+                                    a(href=`/championships/${champ.id}`) #{champ.name}:
+                                    span #{champ._count.championshipTeams} / #{champ.maxTeams}
+                        a(href="/championships") Ver todos os campeonatos
+                    else
+                        p Nenhum campeonato criado ainda.
+                .card__footer
+                    a.btn.btn--secondary(href="/championships/create") + Novo Campeonato

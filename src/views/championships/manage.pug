@@ -1,0 +1,51 @@
+extends ../layouts/main
+
+block content
+    if success
+        .alert.alert--success= success
+    if errors && errors.length > 0
+        .alert.alert--error
+            ul
+                each error in errors
+                    li= error
+
+    .page-header
+        h1.page-header__title Gerenciar: #{championship.name}
+        a.btn.btn--secondary(href=`/championships/${championship.id}`) Ver Detalhes
+
+    .data-grid
+        // Card para inscrever novas equipes
+        .card
+            .card__header
+                h3 Inscrever Equipe
+            .card__body
+                if eligibleTeams.length > 0
+                    form(method="POST" action=`/championships/${championship.id}/enroll`)
+                        .form-group
+                            label(for="teamId") Selecione uma equipe elegível
+                            select(id="teamId" name="teamId" required)
+                                option(value="" disabled selected) Escolha uma equipe...
+                                each team in eligibleTeams
+                                    option(value=team.id)= team.name
+                        .form-actions
+                            button.btn.btn--primary(type="submit") Inscrever Equipe
+                else
+                    p Não há equipes elegíveis para inscrição no momento.
+                    p
+                        small Lembre-se: equipes já inscritas ou que não atendem aos critérios de país/continente não aparecerão aqui.
+
+        // Card com as equipes já inscritas
+        .card
+            .card__header
+                h3 Equipes Inscritas (#{championship.championshipTeams.length})
+            .card__body
+                if championship.championshipTeams.length > 0
+                    ul.details-list
+                        each enrollment in championship.championshipTeams
+                            li
+                                a(href=`/teams/${enrollment.team.id}`)= enrollment.team.name
+                                //- Formulário para o botão de delete, para usar o método DELETE.
+                                form(method="POST" action=`/championships/${championship.id}/teams/${enrollment.team.id}?_method=DELETE`)
+                                    button.btn.btn--secondary.btn--small(type="submit") Remover
+                else
+                    p Nenhuma equipe inscrita ainda.

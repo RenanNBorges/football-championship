@@ -1,0 +1,41 @@
+extends ../layouts/main
+
+block content
+    if success
+        .alert.alert--success= success
+    if errors && errors.length > 0
+        .alert.alert--error
+            ul
+                each error in errors
+                    li= error
+
+    .page-header
+        h1.page-header__title Meus Campeonatos
+        a.btn.btn--primary(href="/championships/create") + Novo Campeonato
+
+    if championships.length > 0
+        .data-grid
+            each champ in championships
+                .card
+                    .card__header
+                        a(href=`/championships/${champ.id}`)= champ.name
+                    .card__body
+                        ul.details-list
+                            li
+                                strong Nível: #{champ.level}
+                            li
+                                strong Times: #{champ._count.championshipTeams} / #{champ.maxTeams}
+                            if champ.country
+                                li
+                                    strong País: #{champ.country}
+                            if champ.continent
+                                li
+                                    strong Continente: #{champ.continent}
+                    .card__footer
+                        a.btn.btn--secondary(href=`/championships/${champ.id}/manage`) Gerenciar
+                        a.btn.btn--primary(href=`/championships/${champ.id}`) Ver Detalhes
+    else
+        .card
+            .card__body
+                p Você ainda não criou nenhum campeonato.
+                a.btn.btn--primary(href="/championships/create") Crie o primeiro!

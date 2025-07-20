@@ -1,0 +1,35 @@
+extends layouts/main
+block content
+    .page-container
+
+        main.main-content
+            .content-wrapper
+                //- Seção Hero principal
+                section.hero
+                    .hero__image(style="background-image: url('https://images.unsplash.com/photo-1517420555813-55951368aa68?q=80&w=2070&auto=format&fit=crop');")
+                    .hero__content
+                        h1.hero__title Gerencie Seus Campeonatos de Futebol com Facilidade
+                        h2.hero__subtitle Nossa plataforma oferece arquiteturas MVC e API RESTful para atender às suas necessidades. Crie, gerencie e acompanhe seus campeonatos de forma eficiente.
+                        .hero__actions
+                            if user
+                                a.btn.btn--primary.btn--large(href="/dashboard") Acessar
+                            else
+                                a.btn.btn--primary.btn--large(href="/auth/register") Criar Conta
+
+                //- Seção para os cards de arquitetura.
+                section.architecture-section
+                    h2.architecture-section__title Escolha Sua Arquitetura
+
+                    .architecture-section__card
+                        .architecture-section__content
+                            h3.architecture-section__card-title Arquitetura MVC
+                            p.architecture-section__card-text Abordagem tradicional com renderização no servidor, ideal para aplicações que precisam de interações de usuário mais complexas e integradas.
+                            a.btn.btn--secondary.btn--small(href="/dashboard") Explorar MVC
+                        .architecture-section__image(style="background-image: url('https://images.unsplash.com/photo-1606166325352-a86e5c26b358?q=80&w=1974&auto=format&fit=crop');")
+
+                    .architecture-section__card
+                        .architecture-section__content
+                            h3.architecture-section__card-title Arquitetura API RESTful
+                            p.architecture-section__card-text Abordagem moderna e flexível com separação clara entre frontend e backend, perfeita para Single-Page Applications (SPAs) e apps móveis.
+                            a.btn.btn--secondary.btn--small(href="/teams-api-example") Explorar API
+                        .architecture-section__image(style="background-image: url('https://images.unsplash.com/photo-1579952516518-6c21a6ae6a4e?q=80&w=2070&auto=format&fit=crop');")

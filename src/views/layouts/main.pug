@@ -1,42 +1,36 @@
 doctype html
-html(lang='pt-BR')
+html(lang="pt-BR")
     head
-        meta(charset='UTF-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        title= title ? `${title} - Football Championship Platform` : 'Football Championship Platform'
-        link(rel='stylesheet', href='/css/style.css')
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+        //- Link para o nosso arquivo CSS compilado a partir do SASS.
+        link(rel="stylesheet", href="/css/style.css")
+
+        title= title || 'Championship Manager'
 
     body
-        nav.navbar
-            .navbar-brand
-                a(href='/') Football Championship Platform
+        .page-container
+            //- Header atualizado com navegação condicional
+            header.header
+                .header__brand
+                        span Gerenciador de Campeonatos
 
-            .navbar-nav
-                if user
-                    a(href='/dashboard') Dashboard
-                    a(href='/teams') Equipes
-                    a(href='/championships') Campeonatos
-                    .navbar-user
-                        span Olá, #{user.name}!
-                        form.logout-form(action='/auth/logout', method='post')
-                            button(type='submit') Sair
-                else
-                    a(href='/auth/login') Login
-                    a(href='/auth/register') Registrar
+                nav.header__nav
+                    if user
+                        //- Navegação para usuários logados
+                        a(href="/dashboard") Dashboard
+                        a(href="/teams") Minhas Equipes
+                        a(href="/championships") Meus Campeonatos
 
-        main.main-content
-            if errors && errors.length > 0
-                .alert.alert-error
-                    each error in errors
-                        p= error
+                        //- O logout é um formulário para usar o método POST
+                        form(action="/auth/logout" method="POST")
+                            button.btn.btn--secondary.btn--small(type="submit") Sair
+                    else
+                        //- Navegação para visitantes
+                        a.btn.btn--primary(href="/auth/login") Login / Registro
 
-            if success
-                .alert.alert-success
-                    p= success
-
-            block content
-
-        footer.footer
-            p © 2024 Football Championship Platform
-
-        script(src='/js/main.js')
+            //- O main agora tem a classe container para centralizar o conteúdo.
+            main.container
+                //- Bloco de conteúdo que será injetado pelas outras views.
+                block content

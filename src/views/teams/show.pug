@@ -1,0 +1,43 @@
+extends ../layouts/main
+
+block content
+    .page-header
+        h1.page-header__title= team.name
+        a.btn.btn--secondary(href="/teams") Voltar para a lista
+
+    .data-grid
+        .card
+            .card__header
+                h3 Detalhes da Equipe
+            .card__body
+                ul.details-list
+                    li
+                        strong Overall: #{team.overall}
+                    li
+                        strong País: #{team.country}
+                    li
+                        strong Continente: #{team.continent}
+                    li
+                        strong Ataque: #{team.attackLevel}
+                    li
+                        strong Meio-Campo: #{team.midfieldLevel}
+                    li
+                        strong Defesa: #{team.defenseLevel}
+                    li
+                        strong Resistência: #{team.resistanceLevel}
+            .card__footer
+                form(action=`/teams/${team.id}?_method=DELETE` method="POST")
+                    button.btn.btn--secondary(type="submit") Deletar Equipe
+                a.btn.btn--primary(href=`/teams/${team.id}/edit`) Editar
+
+        .card
+            .card__header
+                h3 Campeonatos Inscritos
+            .card__body
+                if team.championshipTeams.length > 0
+                    ul.details-list
+                        each enrollment in team.championshipTeams
+                            li
+                                a(href=`/championships/${enrollment.championship.id}`) #{enrollment.championship.name} span Nível: #{enrollment.championship.level}
+                else
+                    p Esta equipe não está inscrita em nenhum campeonato.

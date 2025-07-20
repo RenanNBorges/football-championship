@@ -1,0 +1,71 @@
+extends ../layouts/main
+
+block content
+    .form-container
+        h1.page-header__title Novo Campeonato
+        p Preencha as informações abaixo para criar um novo campeonato.
+
+        if errors && errors.length > 0
+            .alert.alert--error
+                ul
+                    each error in errors
+                        li= error
+
+        form(method="POST" action="/championships")
+            .form-group
+                label(for="name") Nome do Campeonato
+                input(type="text" id="name" name="name" required)
+
+            .form-group
+                label(for="level") Nível do Campeonato
+                select(id="level" name="level" required)
+                    option(value="" disabled selected) Selecione o nível...
+                    each level in levels
+                        option(value=level)= level
+
+            .form-grid
+                .form-group
+                    label(for="minTeams") Mínimo de Equipes
+                    input(type="number" id="minTeams" name="minTeams" required min="2" max="32")
+                .form-group
+                    label(for="maxTeams") Máximo de Equipes
+                    input(type="number" id="maxTeams" name="maxTeams" required min="2" max="64")
+
+            //- Campos condicionais que aparecem com JavaScript
+            .form-group#country-group(style="display: none;")
+                label(for="country") País
+                input(type="text" id="country" name="country")
+
+            .form-group#continent-group(style="display: none;")
+                label(for="continent") Continente
+                select(id="continent" name="continent")
+                    option(value="" disabled selected) Selecione o continente...
+                    each continent in continents
+                        option(value=continent)= continent
+
+            .form-actions
+                a.btn.btn--secondary(href="/championships") Cancelar
+                button.btn.btn--primary(type="submit") Criar Campeonato
+
+    //- Script para mostrar/ocultar campos com base no nível do campeonato
+    script.
+        document.addEventListener('DOMContentLoaded', () => {
+            const levelSelect = document.getElementById('level');
+            const countryGroup = document.getElementById('country-group');
+            const continentGroup = document.getElementById('continent-group');
+
+            function toggleFields() {
+                const selectedLevel = levelSelect.value;
+                countryGroup.style.display = 'none';
+                continentGroup.style.display = 'none';
+
+                if (selectedLevel === 'Nacional') {
+                    countryGroup.style.display = 'block';
+                } else if (selectedLevel === 'Continental') {
+                    continentGroup.style.display = 'block';
+                }
+            }
+
+            levelSelect.addEventListener('change', toggleFields);
+            toggleFields(); // Executa ao carregar a página para o caso de ter um valor pré-selecionado
+        });

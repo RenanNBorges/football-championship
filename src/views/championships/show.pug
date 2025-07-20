@@ -1,0 +1,48 @@
+extends ../layouts/main
+
+block content
+    if success
+        .alert.alert--success= success
+    if errors && errors.length > 0
+        .alert.alert--error
+            ul
+                each error in errors
+                    li= error
+
+    .page-header
+        h1.page-header__title= championship.name
+        a.btn.btn--secondary(href="/championships") Voltar para a lista
+
+    .data-grid
+        .card
+            .card__header
+                h3 Detalhes do Campeonato
+            .card__body
+                ul.details-list
+                    li
+                        strong Nível: #{championship.level}
+                    li
+                        strong Times Inscritos: #{championship.championshipTeams.length} / #{championship.maxTeams}
+                    li
+                        strong Mínimo de Times: #{championship.minTeams}
+                    if championship.country
+                        li
+                            strong País: #{championship.country}
+                    if championship.continent
+                        li
+                            strong Continente: #{championship.continent}
+
+        .card
+            .card__header
+                h3 Equipes Inscritas
+            .card__body
+                if championship.championshipTeams.length > 0
+                    ul.details-list
+                        each enrollment in championship.championshipTeams
+                            li
+                                a(href=`/teams/${enrollment.team.id}`) #{enrollment.team.name} -
+                                span #{enrollment.team.country}
+                else
+                    p Nenhuma equipe inscrita neste campeonato ainda.
+            .card__footer
+                a.btn.btn--primary(href=`/championships/${championship.id}/manage`) Gerenciar Inscrições

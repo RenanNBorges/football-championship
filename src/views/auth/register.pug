@@ -1,0 +1,33 @@
+extends ../layouts/main
+
+block content
+    .form-container
+        h1.page-header__title Criar Conta
+        p Crie sua conta para começar a montar seus campeonatos.
+
+        if errors && errors.length > 0
+            .alert.alert--error
+                ul
+                    each error in errors
+                        li= error
+
+        form(method="POST" action="/auth/register")
+            .form-group
+                label(for="name") Nome Completo
+                input(type="text" id="name" name="name" required)
+
+            .form-group
+                label(for="email") Email
+                input(type="email" id="email" name="email" required)
+
+            .form-grid
+                .form-group
+                    label(for="password") Senha
+                    input(type="password" id="password" name="password" required)
+                .form-group
+                    label(for="confirmPassword") Confirmar Senha
+                    input(type="password" id="confirmPassword" name="confirmPassword" required)
+
+            .form-actions
+                a(href="/auth/login") Já tem uma conta?
+                button.btn.btn--primary(type="submit") Registrar

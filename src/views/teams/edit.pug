@@ -1,0 +1,52 @@
+extends ../layouts/main
+
+block content
+    .form-container
+        h1.page-header__title Editar Equipe: #{team.name}
+
+        if errors && errors.length > 0
+            .alert.alert--error
+                ul
+                    each error in errors
+                        li= error
+
+        form(method="POST" action=`/teams/${team.id}?_method=PUT`)
+            .form-group
+                label(for="name") Nome da Equipe
+                input(type="text" id="name" name="name" value=team.name required)
+
+            .form-grid
+                .form-group
+                    label(for="primaryColor") Cor Primária
+                    input(type="color" id="primaryColor" name="primaryColor" value=team.primaryColor required)
+                .form-group
+                    label(for="secondaryColor") Cor Secundária
+                    input(type="color" id="secondaryColor" name="secondaryColor" value=team.secondaryColor required)
+
+            .form-grid
+                .form-group
+                    label(for="attackLevel") Ataque (1-10)
+                    input(type="number" id="attackLevel" name="attackLevel" value=team.attackLevel min="1" max="10" required)
+                .form-group
+                    label(for="midfieldLevel") Meio-Campo (1-10)
+                    input(type="number" id="midfieldLevel" name="midfieldLevel" value=team.midfieldLevel min="1" max="10" required)
+                .form-group
+                    label(for="defenseLevel") Defesa (1-10)
+                    input(type="number" id="defenseLevel" name="defenseLevel" value=team.defenseLevel min="1" max="10" required)
+                .form-group
+                    label(for="resistanceLevel") Resistência (1-10)
+                    input(type="number" id="resistanceLevel" name="resistanceLevel" value=team.resistanceLevel min="1" max="10" required)
+
+            .form-grid
+                .form-group
+                    label(for="country") País
+                    input(type="text" id="country" name="country" value=team.country required)
+                .form-group
+                    label(for="continent") Continente
+                    select(id="continent" name="continent" required)
+                        each continent in continents
+                            option(value=continent selected=(team.continent === continent))= continent
+
+            .form-actions
+                a.btn.btn--secondary(href=`/teams/${team.id}`) Cancelar
+                button.btn.btn--primary(type="submit") Salvar Alterações

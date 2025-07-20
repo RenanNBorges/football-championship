@@ -1,0 +1,38 @@
+extends ../layouts/main
+
+block content
+    if success
+        .alert.alert--success= success
+    if errors && errors.length > 0
+        .alert.alert--error
+            ul
+                each error in errors
+                    li= error
+
+    .page-header
+        h1.page-header__title Minhas Equipes
+        a.btn.btn--primary(href="/teams/create") + Nova Equipe
+
+    if teams.length > 0
+        .data-grid
+            each team in teams
+                .card
+                    .card__header
+                        a(href=`/teams/${team.id}`)= team.name
+                    .card__body
+                        ul.details-list
+                            li
+                                strong Overall: #{team.overall}
+                            li
+                                strong País: #{team.country}
+                            li
+                                strong Continente: #{team.continent}
+                    .card__footer
+                        a.btn.btn--secondary(href=`/teams/${team.id}/edit`) Editar
+                        a.btn.btn--primary(href=`/teams/${team.id}`) Ver Detalhes
+    else
+        .card
+            .card__body
+                p Você ainda não criou nenhuma equipe.
+                a.btn.btn--primary(href="/teams/create") Crie a primeira!
+

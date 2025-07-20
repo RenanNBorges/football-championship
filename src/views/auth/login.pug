@@ -1,22 +1,27 @@
-extends ../layouts/auth
+extends ../layouts/main
 
 block content
-    .auth-form
-        h2 Entrar
+    //- Formulário de login centralizado.
+    .form-container
+        h1.page-header__title Login
+        p Acesse sua conta para gerenciar equipes e campeonatos.
 
-        form(action='/auth/login', method='post')
+        //- Renderiza as mensagens de erro, se houver.
+        if errors && errors.length > 0
+            .alert.alert--error
+                ul
+                    each error in errors
+                        li= error
+
+        form(method="POST" action="/auth/login")
             .form-group
-                label(for='email') Email:
-                input(type='email', id='email', name='email', required)
+                label(for="email") Email
+                input(type="email" id="email" name="email" required)
 
             .form-group
-                label(for='password') Senha:
-                input(type='password', id='password', name='password', required)
+                label(for="password") Senha
+                input(type="password" id="password" name="password" required)
 
-            .form-group
-                button(type='submit') Entrar
-
-        .auth-links
-            p
-                | Não tem uma conta?
-                a(href='/auth/register') Registre-se
+            .form-actions
+                a(href="/auth/register") Não tem uma conta?
+                button.btn.btn--primary(type="submit") Entrar

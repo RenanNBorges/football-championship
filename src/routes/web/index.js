@@ -1,16 +1,14 @@
 const express = require('express');
-const { optionalAuth, requireAuth } = require('../../middleware/auth');
+const { requireAuth } = require('../../middleware/auth');
 const { prisma } = require('../../config/database');
 const router = express.Router();
 
-// Página inicial
-router.get('/', optionalAuth, (req, res) => {
+router.get('/', (req, res) => {
     res.render('index', {
         title: 'Football Championship Platform'
     });
 });
 
-// Dashboard
 router.get('/dashboard', requireAuth, async (req, res) => {
     try {
         const [teams, championships] = await Promise.all([
@@ -37,10 +35,13 @@ router.get('/dashboard', requireAuth, async (req, res) => {
             championships
         });
     } catch (error) {
-        console.error('Dashboard error:', error);
         req.session.errors = ['Erro ao carregar dashboard'];
         res.redirect('/');
     }
+});
+
+router.get('/teams-api-example', (req, res) => {
+    res.render('teams-api-example', { title: 'Exemplo API' });
 });
 
 module.exports = router;

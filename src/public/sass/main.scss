@@ -1,0 +1,310 @@
+// src/public/sass/main.scss
+
+// --- Base e Variáveis ---
+// Definindo algumas variáveis para manter o código limpo e reutilizável.
+// Cores e fontes extraídas da referência de design.
+
+$font-family: "Public Sans", "Noto Sans", sans-serif;
+$primary-color: #47a6ea;
+$secondary-color: #e7eef3;
+$text-color: #0e151b;
+$text-light: #4e7997;
+$background-color: #f8fafc; // bg-slate-50
+$border-color: #e7eef3;
+
+// --- Reset e Configuração Global ---
+// Um reset básico para garantir consistência entre navegadores.
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+  color: $text-color;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// --- Estrutura Principal da Página ---
+// Convertendo as classes de layout flex do Tailwind.
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 2.5rem 10rem; // py-5 px-40
+}
+
+.content-wrapper {
+  flex: 1;
+  max-width: 960px;
+}
+
+// --- Header ---
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2.5rem; // py-3 px-10
+  border-bottom: 1px solid $border-color;
+  white-space: nowrap;
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.125rem; // text-lg
+    font-weight: 700;
+  }
+
+  &__logo {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 2rem;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    gap: 1.5rem;
+
+    // Estilo para os links de navegação
+    a {
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+
+      // Não aplicar este estilo a links que já são botões
+      &:not(.btn) {
+        color: $text-light;
+        &:hover {
+          color: $text-color;
+        }
+      }
+    }
+
+    // Reset para o formulário de logout
+    form {
+      margin: 0;
+    }
+  }
+}
+
+// --- Botões ---
+// Estilo base para botões, com modificadores para variações.
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  height: 2.5rem; // h-10
+  border-radius: 0.5rem; // rounded-lg
+  font-weight: 700;
+  font-size: 0.875rem; // text-sm
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+
+  &--primary {
+    background-color: $primary-color;
+    color: $text-color;
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary-color;
+    color: $text-color;
+    &:hover {
+      background-color: darken($secondary-color, 5%);
+    }
+  }
+
+  &--large {
+    height: 3rem; // h-12
+    padding: 0 1.25rem; // px-5
+    font-size: 1rem; // text-base
+  }
+
+  &--small {
+    height: 2rem; // h-8
+    font-weight: 500;
+  }
+}
+
+// --- Seção Hero ---
+// O bloco principal de apresentação da página.
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2.5rem 1rem;
+
+  @media (min-width: 864px) {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  &__image {
+    width: 100%;
+    min-height: 250px; // fallback para aspect-video
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0.5rem;
+
+    @media (min-width: 480px) {
+      min-width: 400px;
+    }
+    @media (min-width: 864px) {
+      flex: 1;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+
+    @media (min-width: 864px) {
+      justify-content: center;
+      flex: 1;
+    }
+  }
+
+  &__title {
+    font-size: 2.25rem; // text-4xl
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.033em;
+
+    @media (min-width: 480px) {
+      font-size: 3rem; // text-5xl
+    }
+  }
+
+  &__subtitle {
+    font-size: 0.875rem; // text-sm
+    font-weight: 400;
+
+    @media (min-width: 480px) {
+      font-size: 1rem; // text-base
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+
+// --- Seção de Arquiteturas ---
+// Cards para apresentar as duas abordagens do projeto.
+
+.architecture-section {
+  padding: 1rem;
+
+  &__title {
+    font-size: 1.375rem; // text-[22px]
+    font-weight: 700;
+    padding: 1.25rem 1rem 0.75rem; // pt-5 px-4 pb-3
+  }
+
+  &__card {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  &__content {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__image {
+    flex: 1;
+    min-height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+  }
+
+  &__card-title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  &__card-text {
+    font-size: 0.875rem;
+    color: $text-light;
+  }
+}
+// --- Formulários ---
+// Um padrão para todos os formulários da aplicação.
+
+.form-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+}
